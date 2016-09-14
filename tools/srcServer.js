@@ -3,19 +3,12 @@ import webpack from 'webpack';
 import path from 'path';
 import config from '../webpack.config.dev';
 import open from 'open';
-import fs from 'fs';
 
 /*eslint-disable no-console */
 
 const port = 3000;
 const app = express();
 const compiler = webpack(config);
-
-//fs.readFile(path.join(__dirname, '../bundle.js'), bar);
-
-function bar (err, data)  {
-    console.log(data.toString());
-  }
 
 app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
@@ -32,6 +25,6 @@ app.listen(port, function(err) {
     if (err) {
         console.log(err);
     } else { 
-        open('http:/localhost:${port}');
+        open(`http://localhost:${port}`);
     }
 });
