@@ -6,9 +6,6 @@ import routes from './routes';
 import './styles/styles.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-/*eslint-disable no-console */
-console.log('debugger 2');
-
 injectTapEventPlugin();
 
 render(

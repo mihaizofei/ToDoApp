@@ -4,8 +4,7 @@ import App from './components/App';
 import HomePage from './components/home/HomePage';
 import AboutPage from './components/about/AboutPage';
 import CoursesPage from './components/course/CoursesPage';
-/*eslint-disable no-console */
-console.log('debugger 1');
+
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={HomePage} />
