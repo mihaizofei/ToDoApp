@@ -10,7 +10,7 @@ class HomePage extends Component {
                 <div>
                     <h1>To do list</h1>
                     <p>To do list in ES6</p>
-                    <RaisedButton label={<Link to="about">Learn more</Link>} primary/>
+                    <Link to="about"><RaisedButton label="Learn more" primary/></Link>
                 </div>
             </MuiThemeProvider>
         );
