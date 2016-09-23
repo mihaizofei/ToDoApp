@@ -1,16 +1,29 @@
 import React, {PropTypes} from 'react';
-import { Link, IndexLink } from 'react-router';
+import { Link, IndexLink, browserHistory } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Tabs, Tab} from 'material-ui/Tabs';
 
-const Header = () => {
-    return (
-        <nav>
-            <IndexLink to="/" activeClassName="active">Home</IndexLink>
-            {" | "}
-            <Link to="/courses" activeClassName="active">Courses</Link>
-            {" | "}
-            <Link to="/about" activeClassName="active">About</Link>
-        </nav>
-    );
-};
+function handleActive(tab) {
+    browserHistory.push(tab.props['data-route']);
+}
+
+const Header = () => (
+    <MuiThemeProvider>
+        <Tabs>
+            <Tab label="Home"
+                data-route="/"
+                onActive={handleActive} 
+            />
+            <Tab label="Courses" 
+                data-route="/courses"
+                onActive={handleActive}
+            />
+            <Tab label="About"
+                data-route="/about"
+                onActive={handleActive}
+            />
+        </Tabs>
+    </MuiThemeProvider>
+);
 
 export default Header;
