@@ -10,7 +10,7 @@ function handleActive(tab) {
 const Header = () => (
     <MuiThemeProvider>
         <Tabs>
-            <Tab label="Courses" 
+            <Tab label="Items" 
                 data-route="/"
                 onActive={handleActive}
             />

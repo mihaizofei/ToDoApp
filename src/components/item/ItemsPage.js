@@ -1,38 +1,38 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as courseActions from '../../actions/courseActions';
+import * as itemActions from '../../actions/itemActions';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
 
-class CoursesPage extends React.Component {
+class ItemsPage extends React.Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            course: { title: "" }
+            item: { title: "" }
         };
 
         this.onTitleChange = this.onTitleChange.bind(this);
-        this.onClickSave = this.onClickSave.bind(this);
+        this.onClickAdd = this.onClickAdd.bind(this);
     }
 
     onTitleChange(event) {
-        const course = this.state.course;
-        course.title = event.target.value;
-        this.setState({course: course});
+        const item = this.state.item;
+        item.title = event.target.value;
+        this.setState({item: item});
     }
 
-    onClickSave() {
-        if (this.state.course.title !== '') {
-            this.props.actions.createCourse(this.state.course);
+    onClickAdd() {
+        if (this.state.item.title !== '') {
+            this.props.actions.createItem(this.state.item);
         }
     }
 
-    courseRow(course, index) {
-        return <ListItem key={index} primaryText={course.title} />;
+    itemRow(item, index) {
+        return <ListItem key={index} primaryText={item.title} />;
     }
 
     render() {
@@ -40,16 +40,16 @@ class CoursesPage extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <List>
-                        {this.props.courses.map(this.courseRow)}
+                        {this.props.items.map(this.itemRow)}
                     </List>
                     <div>
-                    <TextField  hintText="Add course"  
-                                value={this.state.course.title}
+                    <TextField  hintText="Add item"  
+                                value={this.state.item.title}
                                 onChange={this.onTitleChange}
                                 fullWidth/>
                     <RaisedButton fullWidth primary
                                   label="Add" 
-                                  onClick={this.onClickSave}/>
+                                  onClick={this.onClickAdd}/>
                     </div>
                 </div>
             </MuiThemeProvider>
@@ -57,21 +57,21 @@ class CoursesPage extends React.Component {
     }
 }
 
-CoursesPage.propTypes = {
-    courses: PropTypes.array.isRequired,
+ItemsPage.propTypes = {
+    items: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
     return {
-        courses: state.courses
+        items: state.items
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(courseActions, dispatch)
+        actions: bindActionCreators(itemActions, dispatch)
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemsPage);
