@@ -2,13 +2,11 @@ import React, {Component} from 'react';
 import {Route, IndexRoute} from 'react-router';
 import App from './components/App';
 import AdminPage from './components/admin/AdminPage';
-import AboutPage from './components/about/AboutPage';
 import ItemsPage from './components/item/ItemsPage';
 
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={ItemsPage} />
         <Route path="admin" component={AdminPage} />
-        <Route path="about" component={AboutPage} />
     </Route>
 );

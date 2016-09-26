@@ -18,10 +18,6 @@ const Header = () => (
                 data-route="/admin"
                 onActive={handleActive} 
             />
-            <Tab label="About"
-                data-route="/about"
-                onActive={handleActive}
-            />
         </Tabs>
     </MuiThemeProvider>
 );
