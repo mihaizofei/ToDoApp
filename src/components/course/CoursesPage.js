@@ -2,6 +2,10 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as courseActions from '../../actions/courseActions';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {List, ListItem} from 'material-ui/List';
 
 class CoursesPage extends React.Component {
     constructor(props, context) {
@@ -22,29 +26,33 @@ class CoursesPage extends React.Component {
     }
 
     onClickSave() {
-        this.props.actions.createCourse(this.state.course);
+        if (this.state.course.title !== '') {
+            this.props.actions.createCourse(this.state.course);
+        }
     }
 
     courseRow(course, index) {
-        return <div key={index}>{course.title}</div>;
+        return <ListItem key={index} primaryText={course.title} />;
     }
 
     render() {
         return (
-            <div>
-                <h1>Courses</h1>
-                {this.props.courses.map(this.courseRow)}
-                <h2>Add Course</h2>
-                <input
-                    type="text"
-                    onChange={this.onTitleChange}
-                    value={this.state.course.title} />
-
-                <input
-                    type="submit"
-                    value="Save"
-                    onClick={this.onClickSave} />
-            </div>
+            <MuiThemeProvider>
+                <div>
+                    <List>
+                        {this.props.courses.map(this.courseRow)}
+                    </List>
+                    <div>
+                    <TextField  hintText="Add course"  
+                                value={this.state.course.title}
+                                onChange={this.onTitleChange}
+                                fullWidth/>
+                    <RaisedButton fullWidth primary
+                                  label="Add" 
+                                  onClick={this.onClickSave}/>
+                    </div>
+                </div>
+            </MuiThemeProvider>
         );
     }
 }

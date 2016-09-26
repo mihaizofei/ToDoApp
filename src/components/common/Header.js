@@ -10,13 +10,13 @@ function handleActive(tab) {
 const Header = () => (
     <MuiThemeProvider>
         <Tabs>
-            <Tab label="Home"
-                data-route="/"
-                onActive={handleActive} 
-            />
             <Tab label="Courses" 
-                data-route="/courses"
+                data-route="/"
                 onActive={handleActive}
+            />
+            <Tab label="Home"
+                data-route="/home"
+                onActive={handleActive} 
             />
             <Tab label="About"
                 data-route="/about"
