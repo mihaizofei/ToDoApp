@@ -14,8 +14,8 @@ const Header = () => (
                 data-route="/"
                 onActive={handleActive}
             />
-            <Tab label="Home"
-                data-route="/home"
+            <Tab label="Admin"
+                data-route="/admin"
                 onActive={handleActive} 
             />
             <Tab label="About"
