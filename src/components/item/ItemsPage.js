@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as itemActions from '../../actions/itemActions';
 import TextField from 'material-ui/TextField';
+import ItemList from './ItemList';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
@@ -31,17 +32,12 @@ class ItemsPage extends React.Component {
         }
     }
 
-    itemRow(item, index) {
-        return <ListItem key={index} primaryText={item.title} />;
-    }
-
     render() {
+        const {items} = this.props;
         return (
             <MuiThemeProvider>
                 <div>
-                    <List>
-                        {this.props.items.map(this.itemRow)}
-                    </List>
+                    <ItemList items={items}/>
                     <div>
                     <TextField  hintText="Add item"  
                                 value={this.state.item.title}
