@@ -12,6 +12,6 @@ const ItemList = ({items}) => {
 
 ItemList.propTypes = {
     items: PropTypes.array.isRequired
-}
+};
 
 export default ItemList;

@@ -2,9 +2,8 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as itemActions from '../../actions/itemActions';
-import TextField from 'material-ui/TextField';
 import ItemList from './ItemList';
-import RaisedButton from 'material-ui/RaisedButton';
+import AddItem from './AddItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
 
@@ -13,23 +12,23 @@ class ItemsPage extends React.Component {
         super(props, context);
 
         this.state = {
-            item: { title: "" }
+            item: {id:'', title:''}
         };
 
-        this.onTitleChange = this.onTitleChange.bind(this);
-        this.onClickAdd = this.onClickAdd.bind(this);
+        this.updateItemState = this.updateItemState.bind(this);
+        this.saveItem = this.saveItem.bind(this);
     }
 
-    onTitleChange(event) {
-        const item = this.state.item;
-        item.title = event.target.value;
-        this.setState({item: item});
+    updateItemState(event) {
+        let item = this.state.item;
+        item['title'] = event.target.value;
+        return this.setState({item: item});
     }
 
-    onClickAdd() {
-        if (this.state.item.title !== '') {
-            this.props.actions.createItem(this.state.item);
-        }
+    saveItem(event) {
+        event.preventDefault();        
+        this.props.actions.saveItem(this.state.item);
+        this.setState({item:{id:'', title:''}});
     }
 
     render() {
@@ -38,15 +37,9 @@ class ItemsPage extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <ItemList items={items}/>
-                    <div>
-                    <TextField  hintText="Add item"  
-                                value={this.state.item.title}
-                                onChange={this.onTitleChange}
-                                fullWidth/>
-                    <RaisedButton fullWidth primary
-                                  label="Add" 
-                                  onClick={this.onClickAdd}/>
-                    </div>
+                    <AddItem onSave={this.saveItem}
+                             onItemChange={this.updateItemState}
+                             item={this.state.item}/>
                 </div>
             </MuiThemeProvider>
         );
