@@ -6,13 +6,15 @@ import ItemList from './ItemList';
 import AddItem from './AddItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
+//import toastr from 'toastr';
 
 class ItemsPage extends React.Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
-            item: {id:'', title:''}
+            item: {id:'', title:''},
+            saving: false
         };
 
         this.updateItemState = this.updateItemState.bind(this);
@@ -26,9 +28,20 @@ class ItemsPage extends React.Component {
     }
 
     saveItem(event) {
-        event.preventDefault();        
-        this.props.actions.saveItem(this.state.item);
-        this.setState({item:{id:'', title:''}});
+        event.preventDefault(); 
+        this.setState({saving:true});       
+        this.props.actions.saveItem(this.state.item)
+            .then(()=>this.resetState())
+            .catch(error => {
+                //toastr.error(error);
+                this.setState({saving: false});
+            });
+    }
+
+    resetState() {
+        this.setState({item:{id:'', title:''}, 
+                       saving: false});
+        //toastr.success('Item saved');
     }
 
     render() {
@@ -39,7 +52,8 @@ class ItemsPage extends React.Component {
                     <ItemList items={items}/>
                     <AddItem onSave={this.saveItem}
                              onItemChange={this.updateItemState}
-                             item={this.state.item}/>
+                             item={this.state.item}
+                             saving={this.state.saving}/>
                 </div>
             </MuiThemeProvider>
         );

@@ -7,6 +7,7 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import {loadItems} from './actions/itemActions';
 import './styles/styles.css';
+import '../node_modules/toastr/build/toastr.min.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();

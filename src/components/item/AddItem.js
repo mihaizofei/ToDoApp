@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AddItem = ({onSave, onItemChange, item}) => {
+const AddItem = ({onSave, onItemChange, item, saving}) => {
     return (
         <div>
             <TextField  value={item.title}
@@ -10,8 +10,9 @@ const AddItem = ({onSave, onItemChange, item}) => {
                         onChange={onItemChange}  
                         fullWidth/>
             <RaisedButton fullWidth primary
+                          disabled={saving}
                           onClick={onSave}
-                          label="Add"/>
+                          label={saving ? "Adding..." : "Add"}/>
                     </div>
     );
 };
@@ -19,7 +20,8 @@ const AddItem = ({onSave, onItemChange, item}) => {
 AddItem.propTypes = {
     onSave: React.PropTypes.func.isRequired,
     onItemChange: React.PropTypes.func.isRequired,
-    item: React.PropTypes.object.isRequired
+    item: React.PropTypes.object.isRequired,
+    saving: React.PropTypes.bool
 };
 
 export default AddItem;
