@@ -16,12 +16,15 @@
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-react": "^6.2.0",
     "eslint-watch": "^2.1.14",
+    "expect": "^1.20.2",
     "express": "^4.14.0",
     "material-ui": "^0.15.4",
+    "mocha": "^3.1.2",
     "npm-run-all": "^3.1.0",
     "open": "0.0.5",
     "path": "^0.12.7",
     "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
@@ -40,7 +43,9 @@
     "start": "npm-run-all --parallel open:src lint:watch",
     "open:src": "babel-node tools/srcServer.js",
     "lint": "node_modules/.bin/esw webpack.config.* src tools",
-    "lint:watch": "npm run lint -- --watch"
+    "lint:watch": "npm run lint -- --watch",
+    "test": "mocha --reporter spec tools/testSetup.js \"src/**/*.test.js\"",
+    "test:watch": "npm run test -- --watch"
   },
   "author": "mz",
   "license": "ISC"

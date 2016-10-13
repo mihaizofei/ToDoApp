@@ -6,7 +6,7 @@ import ItemList from './ItemList';
 import AddItem from './AddItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
-//import toastr from 'toastr';
+import toastr from 'toastr';
 
 class ItemsPage extends React.Component {
     constructor(props, context) {
@@ -33,7 +33,7 @@ class ItemsPage extends React.Component {
         this.props.actions.saveItem(this.state.item)
             .then(()=>this.resetState())
             .catch(error => {
-                //toastr.error(error);
+                toastr.error(error);
                 this.setState({saving: false});
             });
     }
@@ -41,7 +41,7 @@ class ItemsPage extends React.Component {
     resetState() {
         this.setState({item:{id:'', title:''}, 
                        saving: false});
-        //toastr.success('Item saved');
+        toastr.success('Item saved');
     }
 
     render() {

@@ -13,7 +13,7 @@ const AddItem = ({onSave, onItemChange, item, saving}) => {
                           disabled={saving}
                           onClick={onSave}
                           label={saving ? "Adding..." : "Add"}/>
-                    </div>
+        </div>
     );
 };
 
