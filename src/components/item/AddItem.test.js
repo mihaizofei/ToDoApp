@@ -27,18 +27,18 @@ describe('AddItem via React Test Utils', () => {
         const { output } = setup();
         expect(output.type).toBe('div');
         let [TextField] = output.props.children;
-        expect(TextField.type).toBe('TextField');
+        expect(TextField.props.hintText).toBe('Add item');
     });
 
     it('add button is labeled "Add" when not saving', ()=> {
         const { output } = setup(false);
         const submitButton = output.props.children[1];
-        expect(submitButton.props.value).toBe('Add');
+        expect(submitButton.props.label).toBe('Add');
     });
 
     it('add button is labeled "Adding..." when saving', ()=> {
         const { output } = setup(true);
         const submitButton = output.props.children[1];
-        expect(submitButton.props.value).toBe('Adding...');
+        expect(submitButton.props.label).toBe('Adding...');
     });
 });
