@@ -8,13 +8,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {List, ListItem} from 'material-ui/List';
 import toastr from 'toastr';
 
-class ItemsPage extends React.Component {
+export class ItemsPage extends React.Component {
     constructor(props, context) {
         super(props, context);
 
         this.state = {
             item: {id:'', title:''},
-            saving: false
+            saving: false,
+            errors: {}
         };
 
         this.updateItemState = this.updateItemState.bind(this);
@@ -27,8 +28,26 @@ class ItemsPage extends React.Component {
         return this.setState({item: item});
     }
 
+    addItemIsValid() {
+        let formIsValid = true;
+        let errors = {};
+
+        if(this.state.item.title.length < 1) {
+            errors.title = 'Item must be at least 1 character.';
+            formIsValid = false;
+        }
+
+        this.setState({errors: errors});
+        return formIsValid;
+    }
+
     saveItem(event) {
         event.preventDefault(); 
+
+        if(!this.addItemIsValid()){
+            return;
+        }
+
         this.setState({saving:true});       
         this.props.actions.saveItem(this.state.item)
             .then(()=>this.resetState())
@@ -53,7 +72,8 @@ class ItemsPage extends React.Component {
                     <AddItem onSave={this.saveItem}
                              onItemChange={this.updateItemState}
                              item={this.state.item}
-                             saving={this.state.saving}/>
+                             saving={this.state.saving}
+                             errors={this.state.errors}/>
                 </div>
             </MuiThemeProvider>
         );
