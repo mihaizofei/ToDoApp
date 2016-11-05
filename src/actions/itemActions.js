@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import itemApi from '../api/mockItemApi';
+import itemApi from '../api/firebaseItemApi';
 import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
 
 export function loadItemsSuccess(items) {
@@ -15,7 +15,7 @@ export function updateItemSuccess(item) {
 }
 
 export function loadItems() {
-    return function(dispatch) {
+    return dispatch => {
         dispatch(beginAjaxCall());
         return itemApi.getAllItems().then(items => {
             dispatch(loadItemsSuccess(items));
