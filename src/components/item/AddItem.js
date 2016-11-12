@@ -1,29 +1,29 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AddItem = ({onSave, onItemChange, item, saving, errors}) => {
-    return (
+const AddItem = ({ onSave, onItemChange, item, saving, errors }) => {
+  return (
         <div>
-            <TextField  value={item.title}
+            <TextField value={item.title}
                         hintText="Add item"
-                        onChange={onItemChange}  
+                        onChange={onItemChange}
                         fullWidth
                         errorText={errors.title}/>
             <RaisedButton fullWidth primary
                           disabled={saving}
                           onClick={onSave}
-                          label={saving ? "Adding..." : "Add"}/>
+                          label={saving ? 'Adding...' : 'Add'}/>
         </div>
     );
 };
 
 AddItem.propTypes = {
-    onSave: React.PropTypes.func.isRequired,
-    onItemChange: React.PropTypes.func.isRequired,
-    item: React.PropTypes.object.isRequired,
-    saving: React.PropTypes.bool,
-    errors: React.PropTypes.object
+  onSave: React.PropTypes.func.isRequired,
+  onItemChange: React.PropTypes.func.isRequired,
+  item: React.PropTypes.object.isRequired,
+  saving: React.PropTypes.bool,
+  errors: React.PropTypes.object
 };
 
 export default AddItem;

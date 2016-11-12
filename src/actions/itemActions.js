@@ -1,39 +1,54 @@
 import * as types from './actionTypes';
 import itemApi from '../api/firebaseItemApi';
-import {beginAjaxCall, ajaxCallError} from './ajaxStatusActions';
+import { beginAjaxCall, ajaxCallError } from './ajaxStatusActions';
 
 export function loadItemsSuccess(items) {
-    return { type: types.LOAD_ITEMS_SUCCESS, items };
+  return { type: types.LOAD_ITEMS_SUCCESS, items };
 }
 
 export function createItemSuccess(item) {
-    return {type: types.CREATE_ITEM_SUCCESS, item};
+  return { type: types.CREATE_ITEM_SUCCESS, item };
 }
 
 export function updateItemSuccess(item) {
-    return {type: types.UPDATE_ITEM_SUCCESS, item};
+  return { type: types.UPDATE_ITEM_SUCCESS, item };
+}
+
+export function deleteItemSuccess(itemId) {
+  return { type: types.DELETE_ITEM_SUCCESS, itemId };
 }
 
 export function loadItems() {
-    return dispatch => {
-        dispatch(beginAjaxCall());
-        return itemApi.getAllItems().then(items => {
-            dispatch(loadItemsSuccess(items));
-        }).catch(error => {
-            throw(error);
-        });
-    };
+  return (dispatch) => {
+    dispatch(beginAjaxCall());
+    return itemApi.getAllItems().then((items) => {
+      dispatch(loadItemsSuccess(items));
+    }).catch((error) => {
+      throw error;
+    });
+  };
 }
 
 export function saveItem(item) {
-    return function (dispatch, getState) {
-        dispatch(beginAjaxCall());
-        return itemApi.saveItem(item).then(item => {
-            item.id ? dispatch(updateItemSuccess(item)) :
-                dispatch(createItemSuccess(item));
-        }).catch(error => {
-            dispatch(ajaxCallError(error));
-            throw(error);
-        });
-    };
+  return function(dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return itemApi.saveItem(item).then((it) => {
+      it.id ? dispatch(updateItemSuccess(it)) :
+                dispatch(createItemSuccess(it));
+    }).catch((error) => {
+      dispatch(ajaxCallError(error));
+      throw error;
+    });
+  };
+}
+
+export function deleteItem(itemId) {
+  return function(dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return itemApi.deleteItem(itemId).then(() => {
+      dispatch(deleteItemSuccess(itemId));
+    }).catch((error) => {
+      throw error;
+    });
+  };
 }
