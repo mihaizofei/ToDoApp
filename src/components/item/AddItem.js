@@ -9,13 +9,14 @@ const AddItem = ({ onSave, onItemChange, item, saving, errors }) => {
                         hintText="Add item"
                         onChange={onItemChange}
                         fullWidth
-                        errorText={errors.title}/>
+                        errorText={errors.title}
+                        onKeyDown={(e) => { if (e.keyCode === 13) { onSave(e); } }}/>
             <RaisedButton fullWidth primary
                           disabled={saving}
                           onClick={onSave}
                           label={saving ? 'Adding...' : 'Add'}/>
         </div>
-    );
+  );
 };
 
 AddItem.propTypes = {
