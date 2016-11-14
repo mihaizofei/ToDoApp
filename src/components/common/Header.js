@@ -1,33 +1,43 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import LoadingDots from './LoadingDots';
 
+const styles = {
+  tab: {
+    height: 80,
+    fontSize: 30
+  }
+};
+
 function handleActive(tab) {
-    browserHistory.push(tab.props['data-route']);
+  browserHistory.push(tab.props['data-route']);
 }
 
-const Header = ({loading}) => (
+const Header = ({ loading, isMobile }) =>
     <div>
         <MuiThemeProvider>
             <Tabs>
-                <Tab label="Items" 
+                <Tab label="Items"
                     data-route="/"
                     onActive={handleActive}
+                    style={isMobile ? styles.tab : {}}
                 />
                 <Tab label="Admin"
                     data-route="/admin"
-                    onActive={handleActive} 
+                    onActive={handleActive}
+                    style={isMobile ? styles.tab : {}}
                 />
             </Tabs>
         </MuiThemeProvider>
         {loading && <LoadingDots interval={100} dots={20}/>}
     </div>
-);
+;
 
 Header.propTypes = {
-    loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 export default Header;

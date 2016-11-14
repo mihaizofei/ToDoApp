@@ -3,14 +3,15 @@ import React, { PropTypes, Component } from 'react';
 import Header from './common/Header';
 import { connect } from 'react-redux';
 
-let isAndroid = navigator.userAgent.match(/Android/i);
+let isMobile = navigator.userAgent.match(/Android/i);
 
 class App extends Component {
   render() {
     return (
-            <div className={isAndroid ? 'appMobile' : 'appNormal'}>
+            <div className={isMobile ? 'appMobile' : 'appNormal'}>
                 <Header
-                    loading={this.props.loading}/>
+                    loading={this.props.loading}
+                    isMobile={this.props.isMobile}/>
                 {this.props.children}
             </div>
     );
@@ -24,7 +25,8 @@ App.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   return {
-    loading: state.ajaxCallsInProgress > 0
+    loading: state.ajaxCallsInProgress > 0,
+    isMobile: isMobile
   };
 }
 

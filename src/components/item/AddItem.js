@@ -2,7 +2,14 @@ import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const AddItem = ({ onSave, onItemChange, item, saving, errors }) => {
+const styles = {
+  mobileSize: {
+    height: 80,
+    fontSize: 30
+  }
+};
+
+const AddItem = ({ onSave, onItemChange, item, saving, errors, isMobile }) => {
   return (
         <div>
             <TextField value={item.title}
@@ -10,11 +17,14 @@ const AddItem = ({ onSave, onItemChange, item, saving, errors }) => {
                         onChange={onItemChange}
                         fullWidth
                         errorText={errors.title}
-                        onKeyDown={(e) => { if (e.keyCode === 13) { onSave(e); } }}/>
+                        onKeyDown={(e) => { if (e.keyCode === 13) { onSave(e); } }}
+                        style={isMobile ? styles.mobileSize : {}}/>
             <RaisedButton fullWidth primary
                           disabled={saving}
                           onClick={onSave}
-                          label={saving ? 'Adding...' : 'Add'}/>
+                          label={saving ? 'Adding...' : 'Add'}
+                          style={isMobile ? styles.mobileSize : {}}
+                          labelStyle={isMobile ? styles.mobileSize : {}}/>
         </div>
   );
 };
@@ -24,7 +34,8 @@ AddItem.propTypes = {
   onItemChange: React.PropTypes.func.isRequired,
   item: React.PropTypes.object.isRequired,
   saving: React.PropTypes.bool,
-  errors: React.PropTypes.object
+  errors: React.PropTypes.object,
+  isMobile: React.PropTypes.bool.isRequired
 };
 
 export default AddItem;

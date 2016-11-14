@@ -15,7 +15,8 @@ export class ItemsPage extends React.Component {
     this.state = {
       item: { id: '', title: '' },
       saving: false,
-      errors: {}
+      errors: {},
+      isMobile: navigator.userAgent.match(/Android/i)
     };
 
     this.updateItemState = this.updateItemState.bind(this);
@@ -71,8 +72,7 @@ export class ItemsPage extends React.Component {
   }
 
   resetState() {
-    this.setState({ item: { id: '', title: '' },
-                       saving: false });
+    this.setState({ item: { id: '', title: '' }, saving: false });
     toastr.success('Item saved');
   }
 
@@ -82,15 +82,17 @@ export class ItemsPage extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <ItemList items={items}
-                              onDelete={this.deleteItem}/>
+                              onDelete={this.deleteItem}
+                              isMobile={this.state.isMobile}/>
                     <AddItem onSave={this.saveItem}
                              onItemChange={this.updateItemState}
                              item={this.state.item}
                              saving={this.state.saving}
-                             errors={this.state.errors}/>
+                             errors={this.state.errors}
+                             isMobile={this.state.isMobile}/>
                 </div>
             </MuiThemeProvider>
-        );
+    );
   }
 }
 
