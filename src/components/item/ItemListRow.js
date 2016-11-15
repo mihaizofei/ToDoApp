@@ -5,15 +5,15 @@ import { red500 } from 'material-ui/styles/colors';
 
 const styles = {
   lineMobileSize: {
-    height: 120,
-    fontSize: 50,
-    paddingTop: 37
+    height: 150,
+    fontSize: 60,
+    paddingTop: 50
   },
   iconMobileSize: {
-    height: 55,
-    fontSize: 50,
-    width: 55,
-    marginTop: -3
+    height: 65,
+    fontSize: 60,
+    width: 65,
+    marginTop: -10
   }
 };
 
