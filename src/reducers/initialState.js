@@ -1,4 +1,4 @@
 export default {
-    items: [],
-    ajaxCallsInProgress: 0
+  items: [],
+  ajaxCallsInProgress: 0
 };

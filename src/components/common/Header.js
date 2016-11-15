@@ -6,8 +6,8 @@ import LoadingDots from './LoadingDots';
 
 const styles = {
   tab: {
-    height: 80,
-    fontSize: 30
+    height: 120,
+    fontSize: 50
   }
 };
 
