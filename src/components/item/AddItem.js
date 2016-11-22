@@ -4,8 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   mobileSize: {
-    height: 150,
-    fontSize: 60
+    height: 100,
+    fontSize: 40
   }
 };
 
