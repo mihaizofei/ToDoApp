@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import Header from './common/Header';
 import { connect } from 'react-redux';
 
-let isMobile = navigator.userAgent.match(/Android/i);
+let isMobile = navigator.userAgent.match(/Android/i) || false;
 
 class App extends Component {
   render() {

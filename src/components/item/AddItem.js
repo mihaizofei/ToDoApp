@@ -1,30 +1,43 @@
 import React, { PropTypes } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import AddIcon from 'material-ui/svg-icons/content/add';
 
 const styles = {
-  mobileSize: {
+  textFieldMobile: {
     height: 100,
-    fontSize: 40
+    fontSize: 40,
+    flex: 11
+  },
+  textField: {
+    flex: 9
+  },
+  buttonMobile: {
+    height: 100,
+    fontSize: 40,
+    flex: 1
+  },
+  button: {
+    flex: 1,
+    minWidth: 25,
+    height: 36
   }
 };
 
 const AddItem = ({ onSave, onItemChange, item, saving, errors, isMobile }) => {
   return (
-        <div>
+        <div style={{ display: 'flex' }}>
             <TextField value={item.title}
                         hintText="Add item"
                         onChange={onItemChange}
-                        fullWidth
                         errorText={errors.title}
                         onKeyDown={(e) => { if (e.keyCode === 13) { onSave(e); } }}
-                        style={isMobile ? styles.mobileSize : {}}/>
-            <RaisedButton fullWidth primary
+                        style={isMobile ? styles.textFieldMobile : styles.textField}/>
+            <RaisedButton primary
                           disabled={saving}
                           onClick={onSave}
-                          label={saving ? 'Adding...' : 'Add'}
-                          style={isMobile ? styles.mobileSize : {}}
-                          labelStyle={isMobile ? styles.mobileSize : {}}/>
+                          icon={<AddIcon />}
+                          style={isMobile ? styles.buttonMobile : styles.button}/>
         </div>
   );
 };

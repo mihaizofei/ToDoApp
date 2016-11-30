@@ -16,7 +16,7 @@ export class ItemsPage extends React.Component {
       item: { id: '', title: '' },
       saving: false,
       errors: {},
-      isMobile: navigator.userAgent.match(/Android/i)
+      isMobile: navigator.userAgent.match(/Android/i) || false
     };
 
     this.updateItemState = this.updateItemState.bind(this);
