@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link, IndexLink, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import LoadingDots from './LoadingDots';
+import LinearProgress from 'material-ui/LinearProgress';
 
 const styles = {
   tab: {
@@ -18,20 +18,23 @@ function handleActive(tab) {
 const Header = ({ loading, isMobile }) =>
     <div>
         <MuiThemeProvider>
-            <Tabs>
-                <Tab label="Items"
-                    data-route="/"
-                    onActive={handleActive}
-                    style={isMobile ? styles.tab : {}}
-                />
-                <Tab label="Admin"
-                    data-route="/admin"
-                    onActive={handleActive}
-                    style={isMobile ? styles.tab : {}}
-                />
-            </Tabs>
+            <div>
+                <Tabs>
+                    <Tab label="Items"
+                        data-route="/"
+                        onActive={handleActive}
+                        style={isMobile ? styles.tab : {}}
+                    />
+                    <Tab label="Admin"
+                        data-route="/admin"
+                        onActive={handleActive}
+                        style={isMobile ? styles.tab : {}}
+                    />
+                </Tabs>
+                <br/>
+                {loading && <LinearProgress mode="indeterminate" />}
+            </div>
         </MuiThemeProvider>
-        {loading && <LoadingDots interval={100} dots={20}/>}
     </div>
 ;
 
