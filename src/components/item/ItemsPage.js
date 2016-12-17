@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import * as itemActions from '../../actions/itemActions';
 import ItemList from './ItemList';
 import AddItem from './AddItem';
+import ListFooterButtons from './ListFooterButtons';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { List, ListItem } from 'material-ui/List';
 import toastr from 'toastr';
@@ -13,15 +14,20 @@ export class ItemsPage extends React.Component {
     super(props, context);
 
     this.state = {
-      item: { id: '', title: '' },
+      item: { id: '', title: '', done: false },
       saving: false,
       errors: {},
-      isMobile: navigator.userAgent.match(/Android/i) || false
+      isMobile: navigator.userAgent.match(/Android/i) || false,
+      hideDoneItems: false
     };
 
     this.updateItemState = this.updateItemState.bind(this);
     this.saveItem = this.saveItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.onHideDoneItems = this.onHideDoneItems.bind(this);
+    this.onMarkAllItemsDone = this.onMarkAllItemsDone.bind(this);
+    this.onDeleteAllDoneItems = this.onDeleteAllDoneItems.bind(this);
+    this.doneItem = this.doneItem.bind(this);
   }
 
   updateItemState(event) {
@@ -61,14 +67,8 @@ export class ItemsPage extends React.Component {
 
   deleteItem(itemId) {
     this.props.actions.deleteItem(itemId)
-            .then(() => this.itemDeleted())
-            .catch((error) => {
-              toastr.error(error);
-            });
-  }
-
-  itemDeleted() {
-    toastr.success('Item deleted');
+            .then(() => toastr.success('Item deleted'))
+            .catch((error) => toastr.error(error));
   }
 
   resetState() {
@@ -76,20 +76,50 @@ export class ItemsPage extends React.Component {
     toastr.success('Item saved');
   }
 
+  onHideDoneItems() {
+    this.setState({ hideDoneItems: !this.state.hideDoneItems });
+  }
+
+  onMarkAllItemsDone() {
+    this.props.actions.markAllDone()
+        .then(() => toastr.success('All items done'))
+        .catch((error) => toastr.error(error));
+  }
+
+  onDeleteAllDoneItems() {
+    console.log('Delete all done items');
+  }
+
+  doneItem(itemId) {
+    this.props.actions.doneItem(itemId)
+            .then(() => this.itemDone())
+            .catch((error) => {
+              toastr.error(error);
+            });
+  }
+
+  itemDone() {
+    toastr.success('Item completed');
+  }
+
   render() {
     const { items } = this.props;
     return (
             <MuiThemeProvider>
                 <div>
-                    <ItemList items={items}
-                              onDelete={this.deleteItem}
-                              isMobile={this.state.isMobile}/>
+                    <ItemList items={this.state.hideDoneItems ? items.filter((i) => !i.done) : items}
+                              onDeleteItem={this.deleteItem}
+                              isMobile={this.state.isMobile}
+                              onDoneItem={this.doneItem}/>
                     <AddItem onSave={this.saveItem}
                              onItemChange={this.updateItemState}
                              item={this.state.item}
                              saving={this.state.saving}
                              errors={this.state.errors}
                              isMobile={this.state.isMobile}/>
+                    <ListFooterButtons onHideDoneItems={this.onHideDoneItems}
+                                       onMarkAllItemsDone={this.onMarkAllItemsDone}
+                                       onDeleteAllDoneItems={this.onDeleteAllDoneItems}/>
                 </div>
             </MuiThemeProvider>
     );

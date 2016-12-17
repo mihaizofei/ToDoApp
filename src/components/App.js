@@ -9,9 +9,8 @@ class App extends Component {
   render() {
     return (
             <div className={isMobile ? 'appMobile' : 'appNormal'}>
-                <Header
-                    loading={this.props.loading}
-                    isMobile={this.props.isMobile}/>
+                <Header loading={this.props.loading}
+                        isMobile={this.props.isMobile}/>
                 {this.props.children}
             </div>
     );

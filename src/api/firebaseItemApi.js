@@ -21,7 +21,7 @@ class ItemApi {
     return new Promise((resolve, reject) => {
       firebaseRef.once('value').then(function(snapshot) {
         snapshot.forEach(function(ss) {
-          items.push({ key: ss.getKey(), id: ss.val().id, title: ss.val().title });
+          items.push({ key: ss.getKey(), id: ss.val().id, title: ss.val().title, done: ss.val().done || false });
         });
         resolve(Object.assign([], items));
       });
@@ -47,6 +47,32 @@ class ItemApi {
       }
 
       resolve(item);
+    });
+  }
+
+  static doneItem(itemId) {
+    return new Promise((resolve, reject) => {
+      const index = items.findIndex((a) => a.id === itemId);
+      let item = Object.assign({}, items[index]);
+      item.done = !item.done;
+      items.splice(index, 1, item);
+      let itemKey = items[index].key;
+      firebaseRef.child(itemKey).update(item);
+      resolve(item);
+    });
+  }
+
+  static markAllDone() {
+    return new Promise((resolve, reject) => {
+      for (let item of items) {
+        let newItem = Object.assign({}, item);
+        newItem.done = true;
+        const index = items.findIndex((a) => a.id === item.id);
+        let itemKey = items[index].key;
+        firebaseRef.child(itemKey).update(newItem);
+        items.splice(index, 1, newItem);
+      }
+      resolve();
     });
   }
 
