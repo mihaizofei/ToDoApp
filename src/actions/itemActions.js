@@ -26,6 +26,10 @@ export function markAllDoneSuccess() {
   return { type: types.MARK_ALL_DONE_SUCCESS };
 }
 
+export function deleteAllDoneSuccess() {
+  return { type: types.DELETE_ALL_DONE_SUCCESS };
+}
+
 export function loadItems() {
   return (dispatch) => {
     dispatch(beginAjaxCall());
@@ -77,6 +81,17 @@ export function markAllDone() {
     dispatch(beginAjaxCall());
     return itemApi.markAllDone().then(() =>
       dispatch(markAllDoneSuccess())
+    ).catch((error) => {
+      throw error;
+    });
+  };
+}
+
+export function deleteAllDone() {
+  return function(dispatch, getState) {
+    dispatch(beginAjaxCall());
+    return itemApi.deleteAllDone().then(() =>
+      dispatch(deleteAllDoneSuccess())
     ).catch((error) => {
       throw error;
     });

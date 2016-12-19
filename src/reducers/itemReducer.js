@@ -38,6 +38,11 @@ export default function itemReducer(state = initialState.items, action) {
       }
       return [ ...newState ];
 
+    case types.DELETE_ALL_DONE_SUCCESS:
+      return [
+        ...state.filter((item) => !item.done)
+      ];
+
     default:
       return state;
   }

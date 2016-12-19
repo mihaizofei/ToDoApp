@@ -4,24 +4,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 const styles = {
-  textFieldMobile: {
-    height: 100,
-    fontSize: 40,
-    flex: 11
-  },
-  textField: {
-    flex: 9
-  },
-  buttonMobile: {
-    height: 100,
-    fontSize: 40,
-    flex: 1
-  },
-  button: {
-    flex: 1,
-    minWidth: 25,
-    height: 36
-  }
+  textFieldMobile: { height: 100, fontSize: 40, flex: 11 },
+  textField: { flex: 9 },
+  buttonMobile: { height: 100, fontSize: 40, flex: 1 },
+  button: { flex: 1, minWidth: 25, height: 36 }
 };
 
 const AddItem = ({ onSave, onItemChange, item, saving, errors, isMobile }) => {

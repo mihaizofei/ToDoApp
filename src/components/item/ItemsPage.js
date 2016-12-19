@@ -33,6 +33,7 @@ export class ItemsPage extends React.Component {
   updateItemState(event) {
     let item = this.state.item;
     item.title = event.target.value;
+    item.done = false;
     return this.setState({ item: item });
   }
 
@@ -57,6 +58,7 @@ export class ItemsPage extends React.Component {
     }
 
     this.setState({ saving: true });
+    debugger;
     this.props.actions.saveItem(this.state.item)
             .then(() => this.resetState())
             .catch((error) => {
@@ -87,7 +89,9 @@ export class ItemsPage extends React.Component {
   }
 
   onDeleteAllDoneItems() {
-    console.log('Delete all done items');
+    this.props.actions.deleteAllDone()
+      .then(() => toastr.success('All done items deleted'))
+      .catch((error) => toastr.error(error));
   }
 
   doneItem(itemId) {

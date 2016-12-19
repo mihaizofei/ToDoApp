@@ -32,7 +32,6 @@ class ItemApi {
     item = Object.assign({}, item); // to avoid manipulating object passed in.
     return new Promise((resolve, reject) => {
 
-    // Simulate server-side validation
       const minItemTitleLength = 1;
       if (item.title.length < minItemTitleLength) {
         reject(`Title must be at least ${minItemTitleLength} characters.`);
@@ -76,11 +75,22 @@ class ItemApi {
     });
   }
 
+  static deleteAllDone() {
+    return new Promise((resolve, reject) => {
+      let itemsToDelete = items.filter((i) => i.done);
+      for (let item of itemsToDelete) {
+        const indexOfItemToDelete = items.findIndex((a) => a.id === item.id);
+        let itemKey = items[indexOfItemToDelete].key;
+        firebaseRef.child(itemKey).remove();
+      }
+      items = items.filter((i) => !i.done);
+      resolve();
+    });
+  }
+
   static deleteItem(itemId) {
     return new Promise((resolve, reject) => {
-      const indexOfItemToDelete = items.findIndex(function(item) {
-        return item.id === itemId;
-      });
+      const indexOfItemToDelete = items.findIndex((item) => item.id === itemId);
       let itemKey = items[indexOfItemToDelete].key;
       items.splice(indexOfItemToDelete, 1);
       firebaseRef.child(itemKey).remove();
