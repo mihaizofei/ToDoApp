@@ -25,11 +25,6 @@ const Header = ({ loading, isMobile }) =>
                         onActive={handleActive}
                         style={isMobile ? styles.tab : {}}
                     />
-                    <Tab label="Admin"
-                        data-route="/admin"
-                        onActive={handleActive}
-                        style={isMobile ? styles.tab : {}}
-                    />
                 </Tabs>
                 <br/>
                 {loading && <LinearProgress mode="indeterminate" />}

@@ -7,6 +7,5 @@ import ItemsPage from './components/item/ItemsPage'; // eslint-disable-line impo
 export default (
     <Route path="/" component={App}>
         <IndexRoute component={ItemsPage} />
-        <Route path="admin" component={AdminPage} />
     </Route>
 );
