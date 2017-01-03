@@ -21,7 +21,12 @@ class ItemApi {
     return new Promise((resolve, reject) => {
       firebaseRef.once('value').then(function(snapshot) {
         snapshot.forEach(function(ss) {
-          items.push({ key: ss.getKey(), id: ss.val().id, title: ss.val().title, done: ss.val().done || false });
+          items.push({
+            key: ss.getKey(),
+            id: ss.val().id,
+            title: ss.val().title,
+            done: ss.val().done || false,
+            inEdit: false });
         });
         resolve(Object.assign([], items));
       });
@@ -36,15 +41,29 @@ class ItemApi {
       if (item.title.length < minItemTitleLength) {
         reject(`Title must be at least ${minItemTitleLength} characters.`);
       }
-      if (item.id) {
-        const existingItemIndex = items.findIndex((a) => a.id === item.id);
-        item.splice(existingItemIndex, 1, item);
-      } else {
-        item.id = generateId();
-        item.key = firebaseRef.push(item).getKey();
-        items.push(item);
+      item.id = generateId();
+      item.key = firebaseRef.push(item).getKey();
+      items.push(item);
+
+      resolve(item);
+    });
+  }
+
+  static updateItem(itemId, title) {
+    return new Promise((resolve, reject) => {
+      const minItemTitleLength = 1;
+      if (title.length < minItemTitleLength) {
+        reject(`Title must be at least ${minItemTitleLength} characters.`);
       }
 
+      let item = Object.assign({}, items.filter((i) => i.id === itemId))[0];
+      item.title = title;
+      item.inEdit = false;
+
+      const existingItemIndex = items.findIndex((a) => a.id === item.id);
+      items.splice(existingItemIndex, 1, item);
+
+      firebaseRef.child(item.key).update(item);
       resolve(item);
     });
   }

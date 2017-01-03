@@ -14,8 +14,8 @@ export function updateItemSuccess(item) {
   return { type: types.UPDATE_ITEM_SUCCESS, item };
 }
 
-export function deleteItemSuccess(itemId) {
-  return { type: types.DELETE_ITEM_SUCCESS, itemId };
+export function editItemSuccess(itemId) {
+  return { type: types.EDIT_ITEM_SUCCESS, itemId };
 }
 
 export function doneItemSuccess(item) {
@@ -45,8 +45,7 @@ export function saveItem(item) {
   return function(dispatch, getState) {
     dispatch(beginAjaxCall());
     return itemApi.saveItem(item).then((it) => {
-      it.id ? dispatch(updateItemSuccess(it)) :
-                dispatch(createItemSuccess(it));
+      dispatch(createItemSuccess(it));
     }).catch((error) => {
       dispatch(ajaxCallError(error));
       throw error;
@@ -54,14 +53,21 @@ export function saveItem(item) {
   };
 }
 
-export function deleteItem(itemId) {
-  return function(dispatch, getState) {
+export function updateItem(itemId, title) {
+  return (dispatch, getState) => {
     dispatch(beginAjaxCall());
-    return itemApi.deleteItem(itemId).then(() => {
-      dispatch(deleteItemSuccess(itemId));
+    return itemApi.updateItem(itemId, title).then((item) => {
+      dispatch(updateItemSuccess(item));
     }).catch((error) => {
+      dispatch(ajaxCallError(error));
       throw error;
     });
+  };
+}
+
+export function editItem(itemId) {
+  return function(dispatch, getState) {
+    dispatch(editItemSuccess(itemId));
   };
 }
 

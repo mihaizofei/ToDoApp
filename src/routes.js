@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/App';
-import AdminPage from './components/admin/AdminPage';
 import ItemsPage from './components/item/ItemsPage'; // eslint-disable-line import/no-named-as-default
 
 export default (

@@ -23,11 +23,12 @@ export class ItemsPage extends React.Component {
 
     this.updateItemState = this.updateItemState.bind(this);
     this.saveItem = this.saveItem.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
+    this.editItem = this.editItem.bind(this);
     this.onHideDoneItems = this.onHideDoneItems.bind(this);
     this.onMarkAllItemsDone = this.onMarkAllItemsDone.bind(this);
     this.onDeleteAllDoneItems = this.onDeleteAllDoneItems.bind(this);
     this.doneItem = this.doneItem.bind(this);
+    this.updateItem = this.updateItem.bind(this);
   }
 
   updateItemState(event) {
@@ -58,7 +59,6 @@ export class ItemsPage extends React.Component {
     }
 
     this.setState({ saving: true });
-    debugger;
     this.props.actions.saveItem(this.state.item)
             .then(() => this.resetState())
             .catch((error) => {
@@ -67,10 +67,8 @@ export class ItemsPage extends React.Component {
             });
   }
 
-  deleteItem(itemId) {
-    this.props.actions.deleteItem(itemId)
-            .then(() => toastr.success('Item deleted'))
-            .catch((error) => toastr.error(error));
+  editItem(itemId) {
+    this.props.actions.editItem(itemId);
   }
 
   resetState() {
@@ -102,6 +100,12 @@ export class ItemsPage extends React.Component {
             });
   }
 
+  updateItem(itemId, title) {
+    this.props.actions.updateItem(itemId, title)
+      .then(() => toastr.success('Item updated'))
+      .catch((error) => toastr.error(error));
+  }
+
   itemDone() {
     toastr.success('Item completed');
   }
@@ -112,9 +116,10 @@ export class ItemsPage extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <ItemList items={this.state.hideDoneItems ? items.filter((i) => !i.done) : items}
-                              onDeleteItem={this.deleteItem}
+                              onEditItem={this.editItem}
                               isMobile={this.state.isMobile}
-                              onDoneItem={this.doneItem}/>
+                              onDoneItem={this.doneItem}
+                              onUpdateItem={this.updateItem}/>
                     <AddItem onSave={this.saveItem}
                              onItemChange={this.updateItemState}
                              item={this.state.item}

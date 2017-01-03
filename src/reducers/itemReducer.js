@@ -13,15 +13,22 @@ export default function itemReducer(state = initialState.items, action) {
       ];
 
     case types.UPDATE_ITEM_SUCCESS:
-      return [
-        ...state.filter((item) => item.id !== action.item.id),
-        Object.assign({}, action.item)
-      ];
+      let updatedItem = Object.assign({}, state.filter((item) => item.id === action.item.id)[0]);
+      updatedItem.title = action.item.title;
+      updatedItem.inEdit = false;
+      const ind = state.findIndex((a) => a.id === action.item.id);
+      return state.slice(0, ind)
+                  .concat(updatedItem)
+                  .concat(state.slice(ind + 1));
 
-    case types.DELETE_ITEM_SUCCESS:
-      return [
-        ...state.filter((item) => item.id !== action.itemId)
-      ];
+    case types.EDIT_ITEM_SUCCESS:
+      let editedItem = Object.assign({}, state.filter((item) => item.id === action.itemId)[0]);
+      editedItem.inEdit = !editedItem.inEdit;
+
+      const idx = state.findIndex((a) => a.id === action.itemId);
+      return state.slice(0, idx)
+                  .concat(editedItem)
+                  .concat(state.slice(idx + 1));
 
     case types.DONE_ITEM_SUCCESS:
       const index = state.findIndex((a) => a.id === action.item.id);

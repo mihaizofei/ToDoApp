@@ -2,23 +2,25 @@ import React, { PropTypes } from 'react';
 import ItemListRow from './ItemListRow';
 import { List } from 'material-ui/List';
 
-const ItemList = ({ items, onDeleteItem, isMobile, onDoneItem }) => {
+const ItemList = ({ items, onEditItem, isMobile, onDoneItem, onUpdateItem }) => {
   return (
         <List>
             {items.map((item) => <ItemListRow key={item.id}
                                               item={item}
-                                              onDeleteItem={onDeleteItem}
+                                              onEditItem={onEditItem}
                                               isMobile={isMobile}
-                                              onDoneItem={onDoneItem}/>)}
+                                              onDoneItem={onDoneItem}
+                                              onUpdateItem={onUpdateItem}/>)}
         </List>
   );
 };
 
 ItemList.propTypes = {
-  onDeleteItem: PropTypes.func.isRequired,
+  onEditItem: PropTypes.func.isRequired,
   items: PropTypes.array.isRequired,
   isMobile: PropTypes.bool.isRequired,
-  onDoneItem: PropTypes.func.isRequired
+  onDoneItem: PropTypes.func.isRequired,
+  onUpdateItem: PropTypes.func.isRequired
 };
 
 export default ItemList;
