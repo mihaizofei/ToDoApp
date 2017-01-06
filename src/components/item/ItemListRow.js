@@ -26,11 +26,13 @@ class ItemListRow extends React.Component {
       lineMobile: { height: 150, fontSize: 60, paddingTop: 50,
         textDecoration: this.props.item.done ? 'line-through' : '' },
       lineNormal: { textDecoration: this.props.item.done ? 'line-through' : '' },
-      iconMobileSize: { height: 65, fontSize: 60, width: 65, marginTop: -10 }
+      iconMobileSize: { height: 65, fontSize: 60, width: 65, marginTop: -10 },
+      textMobile: { height: 150, fontSize: 60, paddingTop: 50, width: '100%' },
+      textNormal: { width: '100%' }
     };
     return (
           this.props.item.inEdit ?
-          <TextField style={{ width: '100%' }}
+          <TextField style={this.props.isMobile ? styles.textMobile : styles.textNormal}
                     value={this.state.title}
                     id={this.props.item.id.toString()}
                     onChange={this.handleChange}

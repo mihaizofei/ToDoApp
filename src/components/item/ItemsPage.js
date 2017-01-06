@@ -128,7 +128,8 @@ export class ItemsPage extends React.Component {
                              isMobile={this.state.isMobile}/>
                     <ListFooterButtons onHideDoneItems={this.onHideDoneItems}
                                        onMarkAllItemsDone={this.onMarkAllItemsDone}
-                                       onDeleteAllDoneItems={this.onDeleteAllDoneItems}/>
+                                       onDeleteAllDoneItems={this.onDeleteAllDoneItems}
+                                       isMobile={this.state.isMobile}/>
                 </div>
             </MuiThemeProvider>
     );
